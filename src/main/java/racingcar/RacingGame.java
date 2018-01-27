@@ -3,7 +3,6 @@ package racingcar;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class RacingGame {
 	class Configuration {
 		private int numberCars, numberTrials;
@@ -15,10 +14,11 @@ public class RacingGame {
 	}
 	private List<Car> carList = new ArrayList<Car>();
 	private Configuration configuration;
+	CarSpecification defaultCarSpecification = new CarSpecification();
 	
-	public RacingGame() {
+	public RacingGame() throws InstantiationException, IllegalAccessException {
 		configureGame();
-		addCars(configuration.numberCars);
+		addCarsInBatch(configuration.numberCars);
 		runGame();
 	}
 	
@@ -29,9 +29,13 @@ public class RacingGame {
 		moveCars();
 	}
 	
-	public void addCars(int numberCars) {
+	public void addCar(CarSpecification carSpecification) throws InstantiationException, IllegalAccessException {
+		carList.add(new Car(carSpecification));
+	}
+	
+	public void addCarsInBatch(int numberCars) throws InstantiationException, IllegalAccessException {
 		for(int i = 0; i < numberCars; i ++) {
-			carList.add(new Car());
+			addCar(defaultCarSpecification); 
 		}
 	}
 	
