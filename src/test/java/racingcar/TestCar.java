@@ -35,8 +35,11 @@ public class TestCar {
 	}
 	
 	@Test
-	public void testTransmission() {
-		Car car = new Car(); 
+	public void testTransmission() throws InstantiationException, IllegalAccessException {
+		CarSpecification carSpecification = new CarSpecification();
+		
+		carSpecification.engineType = RandomEngine.class;
+		Car car = new Car(carSpecification); 
 		int countEngineRun = 0;
 		boolean isEngineRunning;
 		
@@ -49,4 +52,11 @@ public class TestCar {
 		
 		assertEquals(countEngineRun, car.position);
 	}
+	
+	/*
+	 * TODO: 
+	 * - Separate test classes (testing the game globally)
+	 * - Compare the number of trials == the sum of total distances the cars moved
+	 * - More to come
+	 */
 }
