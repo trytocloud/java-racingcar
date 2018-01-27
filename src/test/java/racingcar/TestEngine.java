@@ -3,22 +3,20 @@ package racingcar;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TestCar {
+public class TestEngine {
 	int COUNT_TRIAL = 10000;
-	float REASONABLE_PROBABILITY_OF_SUCCESS = (float) 0.1;
+	float REASONABLE_PROBABILITY_OF_SUCCESS = (float) 0.5;
 	
 	@Test
 	public void testRandomEngine() throws Exception {
-		RandomEngine randomEngine = new RandomEngine();
-	
-		testReasonableRandomness(randomEngine);
+		testReasonableRandomness();
 	}
 	
-	public int testEngineRun(RandomEngine randomEngine) {
+	public int runRandomEngine(RandomEngine randomEngine) {
 		int countEngineRun = 0;
 		
-		for(int i = 0; i < COUNT_TRIAL; i ++) {
-			if(randomEngine.isToMove()) {
+		for (int i = 0; i < COUNT_TRIAL; i ++) {
+			if (randomEngine.isToMove()) {
 				countEngineRun ++;
 			}
 		}
@@ -26,26 +24,30 @@ public class TestCar {
 		return countEngineRun;
 	}
 	
-	public void testReasonableRandomness(RandomEngine randomEngine) {
-		int countEngineRun;
-		countEngineRun = testEngineRun(randomEngine);
+	public void testReasonableRandomness() {
+		RandomEngine randomEngine = new RandomEngine();
+		int countEngineRun = runRandomEngine(randomEngine);
 		float probabilityToGo = (float)countEngineRun / COUNT_TRIAL;
 		
 		assertTrue(probabilityToGo > REASONABLE_PROBABILITY_OF_SUCCESS);
 	}
 	
 	@Test
-	public void testTransmission() throws InstantiationException, IllegalAccessException {
+	public void testAllEngines() {
+		testTransmission(RandomEngine.class);
+	}
+	
+	public void testTransmission(Class<? extends Engine> engineType) {
+		// Use the Factory Pattern?
 		CarSpecification carSpecification = new CarSpecification();
-		
-		carSpecification.engineType = RandomEngine.class;
+		carSpecification.engineType = engineType;
 		Car car = new Car(carSpecification); 
-		int countEngineRun = 0;
-		boolean isEngineRunning;
 		
-		for(int i = 0; i < COUNT_TRIAL; i ++) {
-			isEngineRunning = car.engine.run(car);
-			if(isEngineRunning) {
+		int countEngineRun = 0;
+		
+		for (int i = 0; i < COUNT_TRIAL; i ++) {
+			// if runEngine() succeeds, it returns true
+			if (car.runEngine()) {
 				countEngineRun++;
 			}
 		}
