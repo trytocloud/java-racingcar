@@ -7,8 +7,9 @@ public class OutputHandler {
 		}
 		System.out.println("");
 	}
-	public static void printCars(int[] carPositions) {
-		for(int carPosition : carPositions) {
+	
+	public static void printCars(RacingGame racingGame) {
+		for(int carPosition : racingGame.getCarPositions()) {
 			printPosition(carPosition);
 		}
 	}

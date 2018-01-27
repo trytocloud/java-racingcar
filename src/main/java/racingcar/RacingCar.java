@@ -3,16 +3,9 @@ package racingcar;
 
 public class RacingCar {
 	public static void main(String[] args) {
-		int numberCars, numberTrials;
-		int[] inputGameConfiguration;
+		RacingGame myRacingGame = new RacingGame();
 		
-		inputGameConfiguration = InputHandler.requestGameConditions();
-		numberCars = inputGameConfiguration[0];
-		numberTrials = inputGameConfiguration[1];
-		
-		RacingGame myRacingGame = new RacingGame(numberCars, numberTrials);
-		int[] carPositions = myRacingGame.getCarPositions();
-		
-		OutputHandler.printCars(carPositions);
+		// It is indeed weird to have only OutputHandler here as a static class
+		OutputHandler.printCars(myRacingGame);
 	}
 }
