@@ -7,11 +7,11 @@ import racingcar.RacingGame.Configuration;
 public class InputHandler {
 	Scanner scanner;
 	
-	private void initialize() {
+	private void startInput() {
 		scanner = new Scanner(System.in);
 	}
 	
-	private void terminate() {
+	private void endInput() {
 		scanner.close();
 	}
 	
@@ -26,12 +26,12 @@ public class InputHandler {
 		int numberCars;
 		int numberTrials;
 		
-		initialize();
+		startInput();
 		
 		numberCars = Integer.parseInt(requestInput("How many cars are there?"));
 		numberTrials = Integer.parseInt(requestInput("How many trials?"));
 		
-		terminate();
+		endInput();
 		
 		return targetGame.new Configuration(numberCars, numberTrials);
 	}

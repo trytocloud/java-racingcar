@@ -2,19 +2,28 @@ package racingcar;
 
 
 public class Car {
-	
 	public int position;
 	public CarSpecification specification;
-	public Engine engine;
+	private Engine engine;
 	
-	public Car(CarSpecification specification) throws InstantiationException, IllegalAccessException {
+	public Car(CarSpecification specification) {
 		this.specification = specification;
-		engine = specification.engineType.newInstance();
+		try {
+			engine = specification.engineType.newInstance();
+		} catch (InstantiationException invalidEngineClass) {
+			engine = new RandomEngine();
+		} catch (IllegalAccessException invalidEngineClass) {
+			engine = new RandomEngine();
+		}
 	}
 
 	public void moveForward(int trialCount) {
-		for(int i = 0; i < trialCount; i ++) {
+		for (int i = 0; i < trialCount; i ++) {
 			engine.run(this);
 		}
+	}
+	
+	public boolean runEngine() {
+		return engine.run(this);
 	}
 }

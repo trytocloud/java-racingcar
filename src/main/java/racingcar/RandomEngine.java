@@ -2,7 +2,7 @@ package racingcar;
 
 public class RandomEngine extends Engine {
 	public boolean run(Car theCar) {
-		if(isToMove()) {
+		if (isToMove()) {
 			theCar.position += 1;
 			return true;
 		}
@@ -17,6 +17,5 @@ public class RandomEngine extends Engine {
 		
 		return isToGo;
 	}
-	
 }
 

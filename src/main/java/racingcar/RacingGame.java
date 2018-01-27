@@ -12,35 +12,41 @@ public class RacingGame {
 			this.numberTrials = numberTrials;
 		}
 	}
-	private List<Car> carList = new ArrayList<Car>();
+	private List<Car> carList;
 	private Configuration configuration;
-	CarSpecification defaultCarSpecification = new CarSpecification();
+	private CarSpecification defaultCarSpecification;
 	
 	public RacingGame() throws InstantiationException, IllegalAccessException {
+		carList = new ArrayList<Car>();
+		defaultCarSpecification = new CarSpecification();
+		
 		configureGame();
-		addCarsInBatch(configuration.numberCars);
+		addCarsInBatch(this.configuration.numberCars);
 		runGame();
 	}
 	
 	private void configureGame() {
-		configuration = new InputHandler().requestGameConditions(this);
+		this.configuration = new InputHandler().requestGameConditions(this);
 	}
+	
 	public void runGame() {
 		moveCars();
 	}
 	
-	public void addCar(CarSpecification carSpecification) throws InstantiationException, IllegalAccessException {
-		carList.add(new Car(carSpecification));
+	public void addCar(CarSpecification carSpecification) {
+		Car newCar = new Car(carSpecification);
+
+		carList.add(newCar);
 	}
 	
-	public void addCarsInBatch(int numberCars) throws InstantiationException, IllegalAccessException {
-		for(int i = 0; i < numberCars; i ++) {
-			addCar(defaultCarSpecification); 
+	public void addCarsInBatch(int numberCars) {
+		for (int i = 0; i < numberCars; i ++) {
+			addCar(this.defaultCarSpecification); 
 		}
 	}
 	
 	public void moveCars() {
-		for(Car car : carList) {
+		for (Car car : carList) {
 			car.moveForward(configuration.numberTrials);
 		}
 	}
@@ -48,7 +54,7 @@ public class RacingGame {
 	public int[] getCarPositions() {
 		int[] carPositions = new int[configuration.numberCars];
 		
-		for(int i = 0; i < configuration.numberCars; i ++) {
+		for (int i = 0; i < configuration.numberCars; i ++) {
 			carPositions[i] = carList.get(i).position;
 		}
 		
