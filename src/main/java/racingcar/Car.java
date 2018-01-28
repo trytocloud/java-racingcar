@@ -26,14 +26,18 @@ public class Car {
 		}
 	}
 	
-	public boolean runEngine() {
+	public int runEngine() {
 		return engine.run(this);
 	}
 
-	public void moveForward(int trialCount) {
+	public int moveForward(int trialCount) {
+		int distanceTravelled = 0;
+		
 		for (int i = 0; i < trialCount; i ++) {
-			engine.run(this);
+			distanceTravelled += runEngine();
 		}
+		
+		return distanceTravelled;
 	}
 	
 	public void moveBy(int distance) {
