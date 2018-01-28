@@ -1,9 +1,9 @@
 package racingcar;
 
 public class NormalEngine extends Engine {
-	public boolean run(Car theCar) {
+	public int run(Car theCar) {
 		theCar.moveBy(1);
-		return true;
+		return 1;
 	}
 	
 	public boolean isToMove() {
