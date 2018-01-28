@@ -5,32 +5,12 @@ import static org.junit.Assert.*;
 
 public class TestEngine {
 	private final int COUNT_TRIAL = 10000;
+	private final int SAMPLE_SIZE = 10000;
 	private final float REASONABLE_PROBABILITY_OF_SUCCESS = (float) 0.5;
 	
-	@Test
-	public void testRandomEngine() throws Exception {
-		testReasonableRandomness();
-	}
-	
-	public int runRandomEngine(RandomEngine randomEngine) {
-		int countEngineRun = 0;
-		
-		for (int i = 0; i < COUNT_TRIAL; i ++) {
-			if (randomEngine.isToMove()) {
-				countEngineRun ++;
-			}
-		}
-		
-		return countEngineRun;
-	}
-	
-	public void testReasonableRandomness() {
-		RandomEngine randomEngine = new RandomEngine();
-		int countEngineRun = runRandomEngine(randomEngine);
-		float probabilityToGo = (float)countEngineRun / COUNT_TRIAL;
-		
-		assertTrue(probabilityToGo > REASONABLE_PROBABILITY_OF_SUCCESS);
-	}
+	/*
+	 * General engine tests
+	 */
 	
 	@Test
 	public void testAllEngines() {
@@ -48,18 +28,54 @@ public class TestEngine {
 		
 		for (int i = 0; i < COUNT_TRIAL; i ++) {
 			// if runEngine() succeeds, it returns true
-			if (car.runEngine()) {
+			if (car.runEngine() > 0) {
 				countEngineRun++;
 			}
 		}
 		
-		assertEquals(countEngineRun, car.getPosition());
+		assertEquals(countEngineRun * RandomEngine.DISTANCE_PER_UNIT_TIME, car.getPosition());
 	}
 	
 	/*
-	 * TODO: 
-	 * - Separate test classes (testing the game globally)
-	 * - Compare the number of trials == the sum of total distances the cars moved
-	 * - More to come
+	 * RandomEngine-specific tests
 	 */
+	
+	@Test
+	public void testRandomEngine() throws Exception {
+		testReasonableRandomness();
+		compareNormalEngineWithRandomEngine();
+	}
+	
+	public int runRandomEngine(RandomEngine randomEngine) {
+		int countEngineRun = 0;
+		
+		for (int i = 0; i < COUNT_TRIAL; i ++) {
+			if (randomEngine.isToMove()) {
+				countEngineRun ++;
+			}
+		}
+	
+		return countEngineRun;
+	}
+	
+	public void testReasonableRandomness() {
+		RandomEngine randomEngine = new RandomEngine();
+		int countEngineRun = runRandomEngine(randomEngine);
+		float probabilityToGo = (float)countEngineRun / COUNT_TRIAL;
+		
+		assertTrue(probabilityToGo > REASONABLE_PROBABILITY_OF_SUCCESS);
+	}
+	
+	public void compareNormalEngineWithRandomEngine() {
+		
+		for (int i = 0; i < COUNT_TRIAL; i ++) {
+			Car normalEngineCar = new Car(new CarSpecification(EngineType.NORMAL_ENGINE));
+			Car randomEngineCar = new Car(new CarSpecification(EngineType.RANDOM_ENGINE));
+			
+			normalEngineCar.moveBy(SAMPLE_SIZE);
+			randomEngineCar.moveBy(SAMPLE_SIZE);
+			
+			assertTrue(normalEngineCar.getPosition() >= randomEngineCar.getPosition());
+		}
+	}
 }
