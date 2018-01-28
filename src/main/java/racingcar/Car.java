@@ -2,19 +2,32 @@ package racingcar;
 
 
 public class Car {
-	public int position;
+	private int position;
 	public CarSpecification specification;
 	private Engine engine;
 	
 	public Car(CarSpecification specification) {
 		this.specification = specification;
-		try {
-			engine = specification.engineType.newInstance();
-		} catch (InstantiationException invalidEngineClass) {
-			engine = new RandomEngine();
-		} catch (IllegalAccessException invalidEngineClass) {
-			engine = new RandomEngine();
+		
+		initializeEngine();
+	}
+	
+	private void initializeEngine() {
+		switch (specification.engineType) {
+			case NORMAL_ENGINE:
+				engine = new NormalEngine();
+				break;
+			case RANDOM_ENGINE:
+				engine = new RandomEngine();
+				break;
+			default:
+				engine = new RandomEngine();
+				break;
 		}
+	}
+	
+	public boolean runEngine() {
+		return engine.run(this);
 	}
 
 	public void moveForward(int trialCount) {
@@ -23,7 +36,15 @@ public class Car {
 		}
 	}
 	
-	public boolean runEngine() {
-		return engine.run(this);
+	public void moveBy(int distance) {
+		this.setPosition(this.getPosition() + distance);
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 }

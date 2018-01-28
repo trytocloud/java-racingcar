@@ -1,9 +1,13 @@
 package racingcar;
 
 public class RandomEngine extends Engine {
+	private final int RANDOM_RANGE = 9;
+	private final int RANDOM_THRESHOLD = 4;
+	private final int DISTANCE_PER_UNIT_TIME = 1;
+	
 	public boolean run(Car theCar) {
 		if (isToMove()) {
-			theCar.position += 1;
+			theCar.moveBy(DISTANCE_PER_UNIT_TIME);
 			return true;
 		}
 		return false;
@@ -12,8 +16,8 @@ public class RandomEngine extends Engine {
 	public boolean isToMove() {
 		boolean isToGo = false;
 		
-		int randomNumber = (int)(Math.random() * 9);
-		isToGo = (randomNumber >= 4);
+		int randomNumber = (int)(Math.random() * RANDOM_RANGE);
+		isToGo = (randomNumber >= RANDOM_THRESHOLD);
 		
 		return isToGo;
 	}

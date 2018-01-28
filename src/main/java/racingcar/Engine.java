@@ -1,6 +1,6 @@
 package racingcar;
 
 public abstract class Engine {
-	abstract boolean run(Car theCar);
-	abstract boolean isToMove();
+	protected abstract boolean run(Car theCar);
+	protected abstract boolean isToMove();
 }

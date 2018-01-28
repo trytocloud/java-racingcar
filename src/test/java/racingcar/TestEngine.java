@@ -4,8 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestEngine {
-	int COUNT_TRIAL = 10000;
-	float REASONABLE_PROBABILITY_OF_SUCCESS = (float) 0.5;
+	private final int COUNT_TRIAL = 10000;
+	private final float REASONABLE_PROBABILITY_OF_SUCCESS = (float) 0.5;
 	
 	@Test
 	public void testRandomEngine() throws Exception {
@@ -34,13 +34,14 @@ public class TestEngine {
 	
 	@Test
 	public void testAllEngines() {
-		testTransmission(RandomEngine.class);
+		for (EngineType engineType : EngineType.values()) {
+			testTransmission(engineType);
+		}
 	}
 	
-	public void testTransmission(Class<? extends Engine> engineType) {
+	public void testTransmission(EngineType engineType) {
 		// Use the Factory Pattern?
-		CarSpecification carSpecification = new CarSpecification();
-		carSpecification.engineType = engineType;
+		CarSpecification carSpecification = new CarSpecification(engineType);
 		Car car = new Car(carSpecification); 
 		
 		int countEngineRun = 0;
@@ -52,7 +53,7 @@ public class TestEngine {
 			}
 		}
 		
-		assertEquals(countEngineRun, car.position);
+		assertEquals(countEngineRun, car.getPosition());
 	}
 	
 	/*

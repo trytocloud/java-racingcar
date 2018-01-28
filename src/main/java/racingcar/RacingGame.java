@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class RacingGame {
+	private List<Car> carList;
+	private Configuration configuration;
+	private CarSpecification defaultCarSpecification;
+	
 	class Configuration {
 		private int numberCars, numberTrials;
 		
@@ -12,11 +16,8 @@ public class RacingGame {
 			this.numberTrials = numberTrials;
 		}
 	}
-	private List<Car> carList;
-	private Configuration configuration;
-	private CarSpecification defaultCarSpecification;
 	
-	public RacingGame() throws InstantiationException, IllegalAccessException {
+	public RacingGame() {
 		carList = new ArrayList<Car>();
 		defaultCarSpecification = new CarSpecification();
 		
@@ -55,7 +56,7 @@ public class RacingGame {
 		int[] carPositions = new int[configuration.numberCars];
 		
 		for (int i = 0; i < configuration.numberCars; i ++) {
-			carPositions[i] = carList.get(i).position;
+			carPositions[i] = carList.get(i).getPosition();
 		}
 		
 		return carPositions;

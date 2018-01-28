@@ -1,9 +1,14 @@
 package racingcar;
 
 class CarSpecification {
-	Class<? extends Engine> engineType; // this may be both unsafe and user-unfriendly
+	public EngineType engineType;
 	
 	CarSpecification() {
-		engineType = RandomEngine.class;
+		this.engineType = EngineType.RANDOM_ENGINE;
 	}
+	
+	CarSpecification(EngineType engineType) {
+		this.engineType = engineType;
+	}
+	
 }

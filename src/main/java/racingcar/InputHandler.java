@@ -1,11 +1,12 @@
 package racingcar;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import racingcar.RacingGame.Configuration;
 
 public class InputHandler {
-	Scanner scanner;
+	private Scanner scanner;
 	
 	private void startInput() {
 		scanner = new Scanner(System.in);
@@ -15,11 +16,14 @@ public class InputHandler {
 		scanner.close();
 	}
 	
-	private String requestInput(String question) {
-		String inputString;
+	public String requestInput(String question) {
 		System.out.println(question);
-		inputString = scanner.nextLine();
-		return inputString;
+		try {
+			String inputString = scanner.nextLine();
+			return inputString;
+		} catch(NoSuchElementException invalidInput) {
+			return "0";
+		}
 	}
 	
 	public Configuration requestGameConditions(RacingGame targetGame) { 
